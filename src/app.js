@@ -63,7 +63,7 @@ app.use("/api/auth", authLimiter, authRoutes);
 app.use(
   "/api/memberships",
   rateLimit({
-    windowMs: 0 * 60 * 1000,
+    windowMs: 5 * 60 * 1000,
     limit: 20,
     standardHeaders: "draft-8",
     legacyHeaders: false,
