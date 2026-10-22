@@ -5,6 +5,7 @@ import morgan from "morgan";
 import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
 import path from "node:path";
+import eventRegistrationRoutes from './routes/eventRegistrationRoutes.js';
 import membershipRoutes from "./routes/membershipRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import publicationRoutes from "./routes/publicationRoutes.js";
@@ -72,6 +73,7 @@ app.use(
 app.use("/api/publications", publicationRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/reviewer", reviewerRoutes);
+app.use('/api/event-registrations', rateLimit({ windowMs: 15 * 60 * 1000, limit: 20, standardHeaders: 'draft-8', legacyHeaders: false }), eventRegistrationRoutes);
 app.use(notFound);
 app.use(errorHandler);
 export default app;
