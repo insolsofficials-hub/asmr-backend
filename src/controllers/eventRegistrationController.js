@@ -10,13 +10,13 @@ async function removeRejectedUploads(files) {
 
 export async function createEventRegistration(req, res, next) {
   try {
-    if (!req.files?.profilePicture?.[0]) {
+    if (!req.files?.cv?.[0]) {
       await removeRejectedUploads(req.files);
       return res
         .status(400)
         .json({
           success: false,
-          message: "A profile picture is required.",
+          message: "A CV is required.",
         });
     }
     const email = typeof req.body.email === 'string' ? req.body.email.trim().toLowerCase() : ''; 
@@ -27,8 +27,6 @@ export async function createEventRegistration(req, res, next) {
     const registration = await EventRegistration.create({
       ...Object.fromEntries(['fullName', 'designation', 'institution', 'country', 'gender', 'phone', 'address'].map(key => [key, req.body[key]])),
       email,
-
-      profilePicture: `uploads/profiles/${req.files.profilePicture[0].filename}`,
       cv: req.files.cv?.[0] ? `uploads/cvs/${req.files.cv[0].filename}` : undefined,
     });
     res
