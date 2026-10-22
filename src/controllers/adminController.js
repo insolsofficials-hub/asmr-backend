@@ -1,16 +1,18 @@
 import Membership from '../models/Membership.js';
+import EventRegistration from '../models/EventRegistration.js';
 import Publication from '../models/Publication.js';
 import User from '../models/User.js';
 import { sendNotification, sendSubmissionEmail } from '../services/emailService.js';
 
 export async function adminOverview(req, res, next) {
   try {
-    const [memberships, publications, reviewers] = await Promise.all([
+    const [memberships, publications, reviewers, eventRegistrations] = await Promise.all([
       Membership.find().populate('user', 'name email role').sort({ createdAt: -1 }).lean(),
       Publication.find().populate('user', 'name email').populate('assignedReviewer', 'name email').sort({ createdAt: -1 }).lean(),
       User.find({ role: 'reviewer' }).select('name email role').sort({ name: 1 }).lean(),
+      EventRegistration.find().sort({ createdAt: -1 }).lean(),
     ]);
-    res.json({ success: true, data: { memberships, publications, reviewers } });
+    res.json({ success: true, data: { memberships, publications, reviewers, eventRegistrations } });
   } catch (error) { next(error); }
 }
 

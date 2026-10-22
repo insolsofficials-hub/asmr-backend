@@ -29,6 +29,7 @@ export async function createEventRegistration(req, res, next) {
       email,
 
       profilePicture: `uploads/profiles/${req.files.profilePicture[0].filename}`,
+      cv: req.files.cv?.[0] ? `uploads/cvs/${req.files.cv[0].filename}` : undefined,
     });
     res
       .status(201)

@@ -21,6 +21,7 @@ const eventRegistrationSchema = new mongoose.Schema(
     phone: { type: String, required: true, trim: true, maxLength: 40 },
     address: { type: String, required: true, trim: true, maxLength: 400 },
     profilePicture: { type: String, required: true },
+    cv: { type: String },
     status: {
       type: String,
       enum: ["pending", "reviewing", "approved", "rejected", "declined"],

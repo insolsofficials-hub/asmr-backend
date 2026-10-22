@@ -5,5 +5,5 @@ import { requireAuth } from '../middleware/auth.js';
 const router = Router();
 
 router.get('/mine', requireAuth, getMyEventRegistration);
-router.post('/', membershipUpload.fields([{name:'profilePicture',maxCount:1}]), createEventRegistration);
+router.post('/', membershipUpload.fields([{name:'profilePicture',maxCount:1}, {name:'cv',maxCount:1}]), createEventRegistration);
 export default router;
